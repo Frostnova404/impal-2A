@@ -1,0 +1,88 @@
+class Order:
+    def __init__(self):
+        self.id = None
+        self.order_details = []
+        self.total = 0
+        self.printer = Printer()
+
+    def setId(self, id):
+        self.id = id
+    
+    def calculateTotal(self):
+        self.total = sum(detail.subTotal() for detail in self.order_details)
+        return self.total
+    
+    def cetakStruk(self):
+        self.printer.loadData()
+        return "struk"
+
+class OrderDetail:
+    def __init__(self):
+        self.product_id = None
+        self.quantity = 0
+        self.price = 0
+        self.produk = Produk()
+    
+    def setQuantity(self, id, qty):
+        self.product_id = id
+        self.quantity = qty
+        self.price = self.produk.getPrice(id)
+    
+    def subTotal(self):
+        return self.quantity * self.price
+
+class Produk:
+    def __init__(self):
+        self.products = {
+            1: {"name": "Produk A", "price": 10000},
+            2: {"name": "Produk B", "price": 15000},
+            3: {"name": "Produk C", "price": 20000}
+        }
+    
+    def getPrice(self, id):
+        if id in self.products:
+            return self.products[id]["price"]
+        return 0
+
+class Printer:
+    def loadData(self):
+        print("Sabar, lagi mencetak struk...")
+
+class Kasir:
+    def __init__(self):
+        self.order = None
+    
+    def createOrder(self, prod_size):
+        self.order = Order()
+        self.order.setId(1)
+        
+        for i in range(prod_size):
+            product_id = i + 1
+            quantity = 2
+            
+            order_detail = OrderDetail()
+            order_detail.setQuantity(product_id, quantity)
+            
+            self.order.order_details.append(order_detail)
+        
+        total = self.order.calculateTotal()
+        struk = self.order.cetakStruk()
+        
+        return {
+            "order_id": self.order.id,
+            "total": total,
+            "struk": struk
+        }
+
+if __name__ == "__main__":
+    kasir = Kasir()
+    result = kasir.createOrder(3)
+    
+    print(f"Order ID: {result['order_id']}")
+    print(f"Total: Rp {result['total']}")
+    print(f"Status Struk: {result['struk']}")
+    
+    print("\nDetail Pesanan:")
+    for i, detail in enumerate(kasir.order.order_details):
+        subtotal = detail.subTotal()
+        print(f"Produk {detail.product_id}: {detail.quantity} x Rp {detail.price} = Rp {subtotal}")
