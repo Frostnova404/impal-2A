@@ -1,0 +1,36 @@
+import math
+
+def hitung_luas_lingkaran(jari_jari):
+    return math.pi * jari_jari ** 2
+
+def hitung_luas_persegi_panjang(panjang, lebar):
+    return panjang * lebar
+
+def hitung_luas_permukaan_tabung(jari_jari, tinggi):
+    return 2 * math.pi * jari_jari * (jari_jari + tinggi)
+
+print("Aplikasi ngitung SMP")
+print("==================================")
+print("1. Hitung Luas Lingkaran")
+print("2. Hitung Luas Persegi Panjang")
+print("3. Hitung Luas Permukaan Tabung")
+print("==================================")
+
+pilihan = int(input("Pilih perhitungan (1/2/3): "))
+
+if pilihan == 1:
+    jari_jari = float(input("Masukkan jari-jari: "))
+    luas = hitung_luas_lingkaran(jari_jari)
+    print(f"Luas Lingkaran: {luas}")
+elif pilihan == 2:
+    panjang = float(input("Masukkan panjang: "))
+    lebar = float(input("Masukkan lebar: "))
+    luas = hitung_luas_persegi_panjang(panjang, lebar)
+    print(f"Luas Persegi Panjang: {luas}")
+elif pilihan == 3:
+    jari_jari = float(input("Masukkan jari-jari: "))
+    tinggi = float(input("Masukkan tinggi: "))
+    luas = hitung_luas_permukaan_tabung(jari_jari, tinggi)
+    print(f"Luas Permukaan Tabung: {luas}")
+else:
+    print("Pilihan tidak valid.")
